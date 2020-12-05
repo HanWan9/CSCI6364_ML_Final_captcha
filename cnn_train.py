@@ -134,7 +134,9 @@ def train(height=CAPTCHA_HEIGHT, width=CAPTCHA_WIDTH, y_size=len(CAPTCHA_LIST) *
     :param y_size:
     :return:
     '''
-    acc_rate = 0.95
+    acc_rate = 0.90
+    # acc_rate_low = 0.90
+    # acc_rate_low_flag = 0
     # 按照图片大小申请占位符
     x = tf.placeholder(tf.float32, [None, height * width])
     y = tf.placeholder(tf.float32, [None, y_size])
@@ -166,6 +168,11 @@ def train(height=CAPTCHA_HEIGHT, width=CAPTCHA_WIDTH, y_size=len(CAPTCHA_LIST) *
                 saver.save(sess, model_path, global_step=step)
                 acc_rate += 0.01
                 if acc_rate > 0.99: break
+            # save lower models
+            # if acc > acc_rate_low :
+            #     model_path = os.getcwd() + os.sep + str(acc_rate_low) + "captcha.model"
+            #     saver.save(sess, model_path, global_step=step)
+            #     acc_rate_low += 0.1
         step += 1
     sess.close()
 
